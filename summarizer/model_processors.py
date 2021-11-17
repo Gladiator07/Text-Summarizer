@@ -342,7 +342,7 @@ class Summarizer(ModelProcessor):
 
 class TransformerSummarizer(ModelProcessor):
     """
-    Newer style that has keywords for models and tokenizers, but allows the user to change the type.
+    Another type of Summarizer class to choose keyword based model and tokenizer
     """
 
     MODEL_DICT = {
