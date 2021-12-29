@@ -3,14 +3,16 @@ import streamlit as st
 from extractive_summarizer.model_processors import Summarizer
 from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
 
-def abstractive_summarizer(text : str, model):
-    device = torch.device("cpu")
+def abstractive_summarizer(text : str):
+    abs_model = T5ForConditionalGeneration.from_pretrained('t5-large')
+    tokenizer = T5Tokenizer.from_pretrained('t5-large')
+    device = torch.device('cpu')
     preprocess_text = text.strip().replace("\n", "")
     t5_prepared_text = "summarize: " + preprocess_text
     tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to("cpu")
 
     # summmarize 
-    summary_ids = model.generate(tokenized_text,
+    summary_ids = abs_model.generate(tokenized_text,
                                         num_beams=4,
                                         no_repeat_ngram_size=2,
                                         min_length=30,
@@ -21,17 +23,6 @@ def abstractive_summarizer(text : str, model):
     return abs_summarized_text
 
 if __name__ == "__main__":
-    # ---------------------
-    # download models
-    # ---------------------
-    abs_model = T5ForConditionalGeneration.from_pretrained('t5-large')
-    tokenizer = T5Tokenizer.from_pretrained('t5-large')
-    device = torch.device('cpu')
-
-    # init extractive summarizer (bad practice, fix later)
-    # init model
-    ext_model = Summarizer()
-    
     # ---------------------------------
     # Main Application
     # ---------------------------------
@@ -51,10 +42,12 @@ if __name__ == "__main__":
         if summarize_type == "Extractive":
             # extractive summarizer
             
+            ext_model = Summarizer()
             summarized_text = ext_model(inp_text, num_sentences=5)
       
         elif summarize_type == "Abstractive":
-            summarized_text = abstractive_summarizer(inp_text, model=abs_model)
+
+            summarized_text = abstractive_summarizer(inp_text)
 
         # final summarized output    
         st.subheader("Summarized text")
