@@ -28,7 +28,7 @@ def abstractive_summarizer(text : str, model):
 
 @st.cache()
 def load_abs_model():
-    model = T5ForConditionalGeneration.from_pretrained('t5-large')
+    model = T5ForConditionalGeneration.from_pretrained('t5-base')
     return model
 
 
