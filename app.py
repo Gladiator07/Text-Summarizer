@@ -21,10 +21,10 @@ def abstractive_summarizer(text : str, model):
 
     return abs_summarized_text
 
-@st.cache()
-def load_ext_model():
-    model = Summarizer()
-    return model
+# @st.cache()
+# def load_ext_model():
+#     model = Summarizer()
+#     return model
 
 @st.cache()
 def load_abs_model():
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         if summarize_type == "Extractive":
             # extractive summarizer
             
-            ext_model = load_ext_model()
+            ext_model = Summarizer()
             summarized_text = ext_model(inp_text, num_sentences=5)
       
         elif summarize_type == "Abstractive":
