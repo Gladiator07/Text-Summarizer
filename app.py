@@ -16,6 +16,8 @@ if __name__ == "__main__":
         # init model
         model = Summarizer()
         summarize = st.button("Summarize")
+        with st.expander("See the input text"):
+            st.write(inp_text)
         if summarize:
             st.subheader("Summarized text")
             summarized_text = model(inp_text, num_sentences=5)
