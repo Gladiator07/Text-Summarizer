@@ -12,9 +12,9 @@ from transformers import (AlbertModel, AlbertTokenizer, BartModel,
                           TransfoXLModel, TransfoXLTokenizer, XLMModel,
                           XLMTokenizer, XLNetModel, XLNetTokenizer)
 
-from summarizer.bert_parent import BertParent
-from summarizer.cluster_features import ClusterFeatures
-from summarizer.sentence_handler import SentenceHandler
+from extractive_summarizer.bert_parent import BertParent
+from extractive_summarizer.cluster_features import ClusterFeatures
+from extractive_summarizer.sentence_handler import SentenceHandler
 
 
 class ModelProcessor(object):
