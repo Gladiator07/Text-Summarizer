@@ -1,13 +1,18 @@
 from typing import List, Union
 
-import numpy as np
 import torch
+import streamlit as st
+import numpy as np
 from numpy import ndarray
 from transformers import (AlbertModel, AlbertTokenizer, BertModel,
                           BertTokenizer, DistilBertModel, DistilBertTokenizer,
                           PreTrainedModel, PreTrainedTokenizer, XLMModel,
                           XLMTokenizer, XLNetModel, XLNetTokenizer)
 
+@st.cache()
+def load_hf_model(base_model, model_name, device):
+    model = base_model.from_pretrained(model_name, output_hidden_states=True).to(device)
+    return model
 
 class BertParent(object):
     """
@@ -49,8 +54,9 @@ class BertParent(object):
         if custom_model:
             self.model = custom_model.to(self.device)
         else:
-            self.model = base_model.from_pretrained(
-                model, output_hidden_states=True).to(self.device)
+            # self.model = base_model.from_pretrained(
+                # model, output_hidden_states=True).to(self.device)
+            self.model = load_hf_model(base_model, model, self.device)
 
         if custom_tokenizer:
             self.tokenizer = custom_tokenizer
@@ -58,6 +64,7 @@ class BertParent(object):
             self.tokenizer = base_tokenizer.from_pretrained(model)
 
         self.model.eval()
+
 
     def tokenize_input(self, text: str) -> torch.tensor:
         """
