@@ -4,7 +4,7 @@ from extractive_summarizer.model_processors import Summarizer
 from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
 
 def abstractive_summarizer(text : str, model):
-
+    device = torch.device("cpu")
     preprocess_text = text.strip().replace("\n", "")
     t5_prepared_text = "summarize: " + preprocess_text
     tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to("cpu")
