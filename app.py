@@ -52,12 +52,14 @@ if __name__ == "__main__":
         if summarize_type == "Extractive":
             # extractive summarizer
             
-            ext_model = Summarizer()
-            summarized_text = ext_model(inp_text, num_sentences=5)
+            with st.spinner(text="Creating extractive summary. This might take a few seconds ...")
+                ext_model = Summarizer()
+                summarized_text = ext_model(inp_text, num_sentences=5)
       
         elif summarize_type == "Abstractive":
-            abs_model = load_abs_model()
-            summarized_text = abstractive_summarizer(inp_text, model=abs_model)
+            with st.spinner(text="Creating abstractive summary. This might take a few seconds ...")
+                abs_model = load_abs_model()
+                summarized_text = abstractive_summarizer(inp_text, model=abs_model)
 
         # final summarized output    
         st.subheader("Summarized text")
