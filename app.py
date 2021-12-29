@@ -7,7 +7,7 @@ def abstractive_summarizer(text : str, model):
 
     preprocess_text = text.strip().replace("\n", "")
     t5_prepared_text = "summarize: " + preprocess_text
-    tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to(device)
+    tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to("cpu")
 
     # summmarize 
     summary_ids = model.generate(tokenized_text,
