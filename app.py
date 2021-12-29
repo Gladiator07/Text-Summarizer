@@ -12,7 +12,7 @@ if __name__ == "__main__":
     summarize_type = st.sidebar.selectbox("Summarization type", options=["Extractive", "Abstractive"])
 
     if summarize_type == "Extractive":
-        from model_processors import Summarizer
+        from extractive_summarizer.model_processors import Summarizer
 
         # init model
         model = Summarizer()
