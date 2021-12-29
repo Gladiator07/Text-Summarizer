@@ -3,13 +3,12 @@ import streamlit as st
 from extractive_summarizer.model_processors import Summarizer
 from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
 
-def abstractive_summarizer(text : str):
-    abs_model = T5ForConditionalGeneration.from_pretrained('t5-large')
+def abstractive_summarizer(text : str, model):
     tokenizer = T5Tokenizer.from_pretrained('t5-large')
     device = torch.device('cpu')
     preprocess_text = text.strip().replace("\n", "")
     t5_prepared_text = "summarize: " + preprocess_text
-    tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to("cpu")
+    tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to(device)
 
     # summmarize 
     summary_ids = abs_model.generate(tokenized_text,
@@ -21,6 +20,17 @@ def abstractive_summarizer(text : str):
     abs_summarized_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
     return abs_summarized_text
+
+@st.cache()
+def load_ext_model():
+    model = Summarizer()
+    return model
+
+@st.cache()
+def load_abs_model():
+    model = T5ForConditionalGeneration.from_pretrained('t5-large')
+    return model
+
 
 if __name__ == "__main__":
     # ---------------------------------
@@ -42,12 +52,12 @@ if __name__ == "__main__":
         if summarize_type == "Extractive":
             # extractive summarizer
             
-            ext_model = Summarizer()
+            ext_model = load_ext_model()
             summarized_text = ext_model(inp_text, num_sentences=5)
       
         elif summarize_type == "Abstractive":
-
-            summarized_text = abstractive_summarizer(inp_text)
+            abs_model = load_abs_model()
+            summarized_text = abstractive_summarizer(inp_text, model=abs_model)
 
         # final summarized output    
         st.subheader("Summarized text")
