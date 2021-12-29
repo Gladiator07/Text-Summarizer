@@ -16,4 +16,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://Gladiator:$HF_TOKEN@huggingface.co/spaces/Gladiator/text-summarizer-dev main
+        run: git push --force https://Gladiator:$HF_TOKEN@huggingface.co/spaces/Gladiator/text-summarizer-dev main
