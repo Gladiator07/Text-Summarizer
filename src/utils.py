@@ -14,7 +14,7 @@ emoji_pattern = re.compile(
 
 
 def clean_text(x):
-    x = x.lower()  # lowercase
+    # x = x.lower()  # lowercase
     x = x.encode("ascii", "ignore").decode()  # unicode
     x = re.sub(r"https*\S+", " ", x)  # url
     x = re.sub(r"@\S+", " ", x)  # mentions
