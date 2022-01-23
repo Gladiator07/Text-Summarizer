@@ -10,12 +10,13 @@ from src.abstractive_summarizer import (
     preprocess_text_for_abstractive_summarization,
 )
 
-# # abstractive summarizer model
-# @st.cache()
-# def load_abs_model():
-#     tokenizer = T5Tokenizer.from_pretrained("t5-base")
-#     model = T5ForConditionalGeneration.from_pretrained("t5-base")
-#     return tokenizer, model
+
+@st.cache()
+def load_abs_summarizer(model_name, tokenizer_name):
+    abs_summarizer = pipeline(
+        "summarization", model=model_name, tokenizer=tokenizer_name
+    )
+    return abs_summarizer
 
 
 if __name__ == "__main__":
@@ -73,8 +74,11 @@ if __name__ == "__main__":
                 text="Creating abstractive summary. This might take a few seconds ..."
             ):
                 text_to_summarize = clean_txt
-                abs_summarizer = pipeline(
-                    "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
+                # abs_summarizer = pipeline(
+                #     "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
+                # )
+                abs_summarizer = load_abs_summarizer(
+                    model_name=abs_model_name, tokenizer_name=abs_tokenizer_name
                 )
                 if is_url is False:
                     # list of chunks
