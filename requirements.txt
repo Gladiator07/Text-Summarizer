@@ -6,3 +6,4 @@ transformers
 streamlit
 sentencepiece
 beautifulsoup4
+nltk
