@@ -22,12 +22,12 @@ def clean_text(x):
     x = re.sub(r"https*\S+", " ", x)  # url
     x = re.sub(r"@\S+", " ", x)  # mentions
     x = re.sub(r"#\S+", " ", x)  # hastags
-    x = x.replace("'", "")  # remove ticks
+    # x = x.replace("'", "")  # remove ticks
     # x = re.sub("[%s]" % re.escape(string.punctuation), " ", x)  # punctuation
     # x = re.sub(r"\w*\d+\w*", "", x)  # numbers
     x = re.sub(r"\s{2,}", " ", x)  # over spaces
     x = emoji_pattern.sub(r"", x)  # emojis
-    x = re.sub("[^A-Za-z0-9]+", " ", x)  # special charachters
+    # x = re.sub("[^A-Za-z0-9]+", " ", x)  # special charachters
 
     return x
 
