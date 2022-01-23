@@ -2,8 +2,7 @@ import torch
 import nltk
 import validators
 import streamlit as st
-from nltk.tokenize import sent_tokenize
-from transformers import pipeline, T5Tokenizer, T5ForConditionalGeneration
+from transformers import T5Tokenizer, T5ForConditionalGeneration
 
 # local modules
 from extractive_summarizer.model_processors import Summarizer
@@ -68,6 +67,7 @@ if __name__ == "__main__":
                 text_to_summarize = clean_txt
                 abs_tokenizer, abs_model = load_abs_model()
                 if not is_url:
+                    # list of chunks
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
                         tokenizer=abs_tokenizer, text=clean_txt
                     )

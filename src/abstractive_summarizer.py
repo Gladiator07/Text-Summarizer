@@ -5,13 +5,11 @@ from transformers import T5Tokenizer
 
 def abstractive_summarizer(tokenizer, model, text):
     # inputs to the model
-    inputs = [
-        tokenizer.encode(f"summarize: {chunk}", return_tensors="pt") for chunk in text
-    ]
+    inputs = [tokenizer(f"summarize: {chunk}", return_tensors="pt") for chunk in text]
     abs_summarized_text = []
     for input in inputs:
-        output = model.generate(**input)
-        tmp_sum = tokenizer.decode(*output, skip_special_tokens=True)
+        output = model.generate(input["input_ids"])
+        tmp_sum = tokenizer.decode(output[0], skip_special_tokens=True)
         abs_summarized_text.append(tmp_sum)
 
     abs_summarized_text = " ".join([summ for summ in abs_summarized_text])
