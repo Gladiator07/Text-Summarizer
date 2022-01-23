@@ -31,6 +31,11 @@ if __name__ == "__main__":
 
     inp_text = st.text_input("Enter text or a url here")
 
+    st.subheader("----- OR -----")
+    uploaded_file = st.file_uploader(
+        "Upload a .txt, .pdf, .word file for summarization"
+    )
+
     is_url = validators.url(inp_text)
     if is_url:
         # complete text, chunks to summarize (list of sentences for long docs)
