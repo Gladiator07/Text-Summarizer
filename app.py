@@ -8,7 +8,6 @@ from transformers import pipeline, T5Tokenizer
 from extractive_summarizer.model_processors import Summarizer
 from src.utils import clean_text, fetch_article_text
 from src.abstractive_summarizer import (
-    abstractive_summarizer,
     preprocess_text_for_abstractive_summarization,
 )
 
@@ -76,12 +75,12 @@ if __name__ == "__main__":
                 abs_summarizer = pipeline(
                     "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
                 )
-                if not is_url:
+                if is_url is False:
                     # list of chunks
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
                         tokenizer=abs_tokenizer, text=clean_txt
                     )
-                    print(text_to_summarize)
+                print(text_to_summarize)
                 tmp_sum = abs_summarizer(text_to_summarize, do_sample=False)
 
                 summarized_text = " ".join([summ["summary_text"] for summ in tmp_sum])
