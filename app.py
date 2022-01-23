@@ -2,7 +2,7 @@ import torch
 import nltk
 import validators
 import streamlit as st
-from transformers import T5Tokenizer, T5ForConditionalGeneration
+from transformers import pipeline, T5Tokenizer
 
 # local modules
 from extractive_summarizer.model_processors import Summarizer
@@ -12,12 +12,12 @@ from src.abstractive_summarizer import (
     preprocess_text_for_abstractive_summarization,
 )
 
-# abstractive summarizer model
-@st.cache()
-def load_abs_model():
-    tokenizer = T5Tokenizer.from_pretrained("t5-base")
-    model = T5ForConditionalGeneration.from_pretrained("t5-base")
-    return tokenizer, model
+# # abstractive summarizer model
+# @st.cache()
+# def load_abs_model():
+#     tokenizer = T5Tokenizer.from_pretrained("t5-base")
+#     model = T5ForConditionalGeneration.from_pretrained("t5-base")
+#     return tokenizer, model
 
 
 if __name__ == "__main__":
@@ -28,7 +28,13 @@ if __name__ == "__main__":
     summarize_type = st.sidebar.selectbox(
         "Summarization type", options=["Extractive", "Abstractive"]
     )
+    # ---------------------------
+    # SETUP
     nltk.download("punkt")
+    abs_tokenizer_name = "t5-base"
+    abs_model_name = "t5-base"
+    abs_tokenizer = T5Tokenizer.from_pretrained(abs_tokenizer_name)
+    # ---------------------------
 
     inp_text = st.text_input("Enter text or a url here")
 
@@ -65,26 +71,15 @@ if __name__ == "__main__":
                 text="Creating abstractive summary. This might take a few seconds ..."
             ):
                 text_to_summarize = clean_txt
-                abs_tokenizer, abs_model = load_abs_model()
+                abs_summarizer = pipeline("summarization")
                 if not is_url:
                     # list of chunks
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
                         tokenizer=abs_tokenizer, text=clean_txt
                     )
-                summarized_text = abstractive_summarizer(
-                    abs_tokenizer, abs_model, text_to_summarize
-                )
+                tmp_sum = abs_summarizer(text_to_summarize, do_sample=False)
 
-        #         abs_tokenizer, abs_model = load_abs_model()
-        #         summarized_text = abstractive_summarizer(
-        #             abs_tokenizer, abs_model, text_to_summarize
-        #         )
-        # elif summarize_type == "Abstractive" and is_url:
-        #     abs_url_summarizer = pipeline("summarization")
-        #     tmp_sum = abs_url_summarizer(
-        #         text_to_summarize, max_length=120, min_length=30, do_sample=False
-        #     )
-        #     summarized_text = " ".join([summ["summary_text"] for summ in tmp_sum])
+                summarized_text = " ".join([summ["summary_text"] for summ in tmp_sum])
 
         # final summarized output
         st.subheader("Summarized text")
