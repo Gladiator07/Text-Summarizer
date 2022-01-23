@@ -38,6 +38,9 @@ def fetch_article_text(url: str):
     results = soup.find_all(["h1", "p"])
     text = [result.text for result in results]
     ARTICLE = " ".join(text)
+    ARTICLE = ARTICLE.replace(".", ".<eos>")
+    ARTICLE = ARTICLE.replace("!", "!<eos>")
+    ARTICLE = ARTICLE.replace("?", "?<eos>")
     sentences = ARTICLE.split("<eos>")
     current_chunk = 0
     chunks = []

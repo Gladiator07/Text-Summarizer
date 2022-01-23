@@ -28,11 +28,13 @@ if __name__ == "__main__":
         "Summarization type", options=["Extractive", "Abstractive"]
     )
     # ---------------------------
-    # SETUP
+    # SETUP & Constants
     nltk.download("punkt")
     abs_tokenizer_name = "t5-base"
     abs_model_name = "t5-base"
     abs_tokenizer = T5Tokenizer.from_pretrained(abs_tokenizer_name)
+    abs_max_length = 80
+    abs_min_length = 30
     # ---------------------------
 
     inp_text = st.text_input("Enter text or a url here")
@@ -81,7 +83,12 @@ if __name__ == "__main__":
                         tokenizer=abs_tokenizer, text=clean_txt
                     )
                 print(text_to_summarize)
-                tmp_sum = abs_summarizer(text_to_summarize, do_sample=False)
+                tmp_sum = abs_summarizer(
+                    text_to_summarize,
+                    max_length=abs_max_length,
+                    min_length=abs_min_length,
+                    do_sample=False,
+                )
 
                 summarized_text = " ".join([summ["summary_text"] for summ in tmp_sum])
 
