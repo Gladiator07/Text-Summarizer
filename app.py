@@ -71,7 +71,9 @@ if __name__ == "__main__":
                 text="Creating abstractive summary. This might take a few seconds ..."
             ):
                 text_to_summarize = clean_txt
-                abs_summarizer = pipeline("summarization")
+                abs_summarizer = pipeline(
+                    "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
+                )
                 if not is_url:
                     # list of chunks
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
