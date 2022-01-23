@@ -30,8 +30,8 @@ if __name__ == "__main__":
     # ---------------------------
     # SETUP & Constants
     nltk.download("punkt")
-    abs_tokenizer_name = "t5-base"
-    abs_model_name = "t5-base"
+    abs_tokenizer_name = "facebook/bart-large-cnn"
+    abs_model_name = "facebook/bart-large-cnn"
     abs_tokenizer = T5Tokenizer.from_pretrained(abs_tokenizer_name)
     abs_max_length = 80
     abs_min_length = 30
