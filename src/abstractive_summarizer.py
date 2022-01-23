@@ -14,7 +14,7 @@ def abstractive_summarizer(tokenizer, model, text):
         num_beams=4,
         no_repeat_ngram_size=2,
         min_length=30,
-        max_length=100,
+        max_length=300,
         early_stopping=True,
     )
     abs_summarized_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
