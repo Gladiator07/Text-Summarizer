@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     # view summarized text (expander)
     with st.expander("View input text"):
-        st.write(inp_text)
+        st.write(text_to_summarize)
 
     summarize = st.button("Summarize")
 
