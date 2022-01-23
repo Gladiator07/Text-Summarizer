@@ -1,35 +1,19 @@
 import torch
 import streamlit as st
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+# local modules
 from extractive_summarizer.model_processors import Summarizer
-from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
+from src.utils import clean_text
+from src.abstractive_summarizer import abstractive_summarizer
 
-def abstractive_summarizer(text : str, model):
-    tokenizer = T5Tokenizer.from_pretrained('t5-large')
-    device = torch.device('cpu')
-    preprocess_text = text.strip().replace("\n", "")
-    t5_prepared_text = "summarize: " + preprocess_text
-    tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to(device)
 
-    # summmarize 
-    summary_ids = abs_model.generate(tokenized_text,
-                                        num_beams=4,
-                                        no_repeat_ngram_size=2,
-                                        min_length=30,
-                                        max_length=100,
-                                        early_stopping=True)
-    abs_summarized_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-
-    return abs_summarized_text
-
-# @st.cache()
-# def load_ext_model():
-#     model = Summarizer()
-#     return model
-
+# abstractive summarizer model
 @st.cache()
 def load_abs_model():
-    model = T5ForConditionalGeneration.from_pretrained('t5-base')
-    return model
+    tokenizer = T5Tokenizer.from_pretrained("t5-large")
+    model = T5ForConditionalGeneration.from_pretrained("t5-base")
+    return tokenizer, model
 
 
 if __name__ == "__main__":
@@ -37,9 +21,13 @@ if __name__ == "__main__":
     # Main Application
     # ---------------------------------
     st.title("Text Summarizer 📝")
-    summarize_type = st.sidebar.selectbox("Summarization type", options=["Extractive", "Abstractive"])
+    summarize_type = st.sidebar.selectbox(
+        "Summarization type", options=["Extractive", "Abstractive"]
+    )
 
     inp_text = st.text_input("Enter the text here")
+
+    inp_text = clean_text(inp_text)
 
     # view summarized text (expander)
     with st.expander("View input text"):
@@ -51,16 +39,22 @@ if __name__ == "__main__":
     if summarize:
         if summarize_type == "Extractive":
             # extractive summarizer
-            
-            with st.spinner(text="Creating extractive summary. This might take a few seconds ..."):
+
+            with st.spinner(
+                text="Creating extractive summary. This might take a few seconds ..."
+            ):
                 ext_model = Summarizer()
                 summarized_text = ext_model(inp_text, num_sentences=5)
-      
-        elif summarize_type == "Abstractive":
-            with st.spinner(text="Creating abstractive summary. This might take a few seconds ..."):
-                abs_model = load_abs_model()
-                summarized_text = abstractive_summarizer(inp_text, model=abs_model)
 
-        # final summarized output    
+        elif summarize_type == "Abstractive":
+            with st.spinner(
+                text="Creating abstractive summary. This might take a few seconds ..."
+            ):
+                abs_tokenizer, abs_model = load_abs_model()
+                summarized_text = abstractive_summarizer(
+                    abs_tokenizer, abs_model, inp_text
+                )
+
+        # final summarized output
         st.subheader("Summarized text")
         st.info(summarized_text)
