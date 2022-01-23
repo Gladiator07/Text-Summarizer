@@ -11,15 +11,6 @@ from utils import (
     preprocess_text_for_abstractive_summarization,
 )
 
-
-@st.cache()
-def load_abs_summarizer(model_name, tokenizer_name):
-    abs_summarizer = pipeline(
-        "summarization", model=model_name, tokenizer=tokenizer_name
-    )
-    return abs_summarizer
-
-
 if __name__ == "__main__":
     # ---------------------------------
     # Main Application
@@ -75,12 +66,10 @@ if __name__ == "__main__":
                 text="Creating abstractive summary. This might take a few seconds ..."
             ):
                 text_to_summarize = clean_txt
-                # abs_summarizer = pipeline(
-                #     "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
-                # )
-                abs_summarizer = load_abs_summarizer(
-                    model_name=abs_model_name, tokenizer_name=abs_tokenizer_name
+                abs_summarizer = pipeline(
+                    "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
                 )
+
                 if is_url is False:
                     # list of chunks
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
