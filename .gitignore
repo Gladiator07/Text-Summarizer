@@ -140,3 +140,4 @@ cython_debug/
 # local stuff
 Docs/
 .DS_Store
+.vscode/
