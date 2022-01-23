@@ -8,7 +8,10 @@ from transformers import pipeline, T5Tokenizer, T5ForConditionalGeneration
 # local modules
 from extractive_summarizer.model_processors import Summarizer
 from src.utils import clean_text, fetch_article_text
-from src.abstractive_summarizer import abstractive_summarizer
+from src.abstractive_summarizer import (
+    abstractive_summarizer,
+    preprocess_text_for_abstractive_summarization,
+)
 
 # abstractive summarizer model
 @st.cache()
@@ -62,8 +65,15 @@ if __name__ == "__main__":
             with st.spinner(
                 text="Creating abstractive summary. This might take a few seconds ..."
             ):
+                text_to_summarize = clean_txt
+                abs_tokenizer, abs_model = load_abs_model()
                 if not is_url:
-                    text_to_summarize = sent_tokenize(clean_txt)
+                    text_to_summarize = preprocess_text_for_abstractive_summarization(
+                        tokenizer=abs_tokenizer, text=clean_txt
+                    )
+                summarized_text = abstractive_summarizer(
+                    abs_tokenizer, abs_model, text_to_summarize
+                )
 
         #         abs_tokenizer, abs_model = load_abs_model()
         #         summarized_text = abstractive_summarizer(

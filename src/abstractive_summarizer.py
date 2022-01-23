@@ -4,22 +4,17 @@ from transformers import T5Tokenizer
 
 
 def abstractive_summarizer(tokenizer, model, text):
-    device = torch.device("cpu")
-    preprocess_text = text.strip().replace("\n", "")
-    t5_prepared_text = "summarize: " + preprocess_text
-    tokenized_text = tokenizer.encode(t5_prepared_text, return_tensors="pt").to(device)
+    # inputs to the model
+    inputs = [
+        tokenizer.encode(f"summarize: {chunk}", return_tensors="pt") for chunk in text
+    ]
+    abs_summarized_text = []
+    for input in inputs:
+        output = model.generate(**input)
+        tmp_sum = tokenizer.decode(*output, skip_special_tokens=True)
+        abs_summarized_text.append(tmp_sum)
 
-    # summmarize
-    summary_ids = model.generate(
-        tokenized_text,
-        num_beams=4,
-        no_repeat_ngram_size=2,
-        min_length=30,
-        max_length=300,
-        early_stopping=True,
-    )
-    abs_summarized_text = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-
+    abs_summarized_text = " ".join([summ for summ in abs_summarized_text])
     return abs_summarized_text
 
 
