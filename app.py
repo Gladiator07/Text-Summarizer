@@ -5,8 +5,9 @@ from transformers import AutoTokenizer, pipeline
 
 # local modules
 from extractive_summarizer.model_processors import Summarizer
-from src.utils import clean_text, fetch_article_text
-from src.abstractive_summarizer import (
+from utils import (
+    clean_text,
+    fetch_article_text,
     preprocess_text_for_abstractive_summarization,
 )
 
@@ -85,7 +86,6 @@ if __name__ == "__main__":
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
                         tokenizer=abs_tokenizer, text=clean_txt
                     )
-                print(text_to_summarize)
                 tmp_sum = abs_summarizer(
                     text_to_summarize,
                     max_length=abs_max_length,
