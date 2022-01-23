@@ -27,7 +27,7 @@ def clean_text(x):
     # x = re.sub(r"\w*\d+\w*", "", x)  # numbers
     x = re.sub(r"\s{2,}", " ", x)  # over spaces
     x = emoji_pattern.sub(r"", x)  # emojis
-    # x = re.sub("[^A-Za-z0-9]+", " ", x)  # special charachters
+    x = re.sub("[^.,!?A-Za-z0-9]+", " ", x)  # special charachters except .,!?
 
     return x
 
