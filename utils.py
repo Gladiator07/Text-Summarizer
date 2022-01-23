@@ -104,4 +104,4 @@ def read_text_from_file(file):
     file_text = txt_file.read()
     txt_file.close()
 
-    return txt_file
+    return file_text
