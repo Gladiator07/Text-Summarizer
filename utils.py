@@ -96,3 +96,12 @@ def preprocess_text_for_abstractive_summarization(tokenizer, text):
             length = len(tokenizer.tokenize(sentence))
 
     return chunks
+
+
+def read_text_from_file(file):
+
+    txt_file = open(file, "r")
+    file_text = txt_file.read()
+    txt_file.close()
+
+    return txt_file

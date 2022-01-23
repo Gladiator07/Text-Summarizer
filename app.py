@@ -9,6 +9,7 @@ from utils import (
     clean_text,
     fetch_article_text,
     preprocess_text_for_abstractive_summarization,
+    read_text_from_file,
 )
 
 if __name__ == "__main__":
@@ -40,6 +41,8 @@ if __name__ == "__main__":
     if is_url:
         # complete text, chunks to summarize (list of sentences for long docs)
         text, clean_txt = fetch_article_text(url=inp_text)
+    elif uploaded_file:
+        clean_txt = read_text_from_file(uploaded_file)
     else:
         clean_txt = clean_text(inp_text)
 
