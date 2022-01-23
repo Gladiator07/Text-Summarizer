@@ -81,6 +81,7 @@ if __name__ == "__main__":
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
                         tokenizer=abs_tokenizer, text=clean_txt
                     )
+                    print(text_to_summarize)
                 tmp_sum = abs_summarizer(text_to_summarize, do_sample=False)
 
                 summarized_text = " ".join([summ["summary_text"] for summ in tmp_sum])
