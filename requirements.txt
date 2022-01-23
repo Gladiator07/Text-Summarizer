@@ -5,3 +5,4 @@ scikit-learn
 transformers
 streamlit
 sentencepiece
+beautifulsoup4
