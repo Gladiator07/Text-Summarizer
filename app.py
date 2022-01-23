@@ -43,6 +43,8 @@ if __name__ == "__main__":
     # called on toggle button [summarize]
     if summarize:
         if summarize_type == "Extractive":
+            if is_url:
+                text_to_summarize = " ".join([txt for txt in text_to_summarize])
             # extractive summarizer
 
             with st.spinner(
