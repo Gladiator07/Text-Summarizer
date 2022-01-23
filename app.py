@@ -1,8 +1,7 @@
-import torch
 import nltk
 import validators
 import streamlit as st
-from transformers import pipeline, T5Tokenizer
+from transformers import AutoTokenizer, pipeline
 
 # local modules
 from extractive_summarizer.model_processors import Summarizer
@@ -32,7 +31,7 @@ if __name__ == "__main__":
     nltk.download("punkt")
     abs_tokenizer_name = "facebook/bart-large-cnn"
     abs_model_name = "facebook/bart-large-cnn"
-    abs_tokenizer = T5Tokenizer.from_pretrained(abs_tokenizer_name)
+    abs_tokenizer = AutoTokenizer.from_pretrained(abs_tokenizer_name)
     abs_max_length = 100
     abs_min_length = 30
     # ---------------------------
