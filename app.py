@@ -58,6 +58,8 @@ if __name__ == "__main__":
         if summarize_type == "Extractive":
             if is_url:
                 text_to_summarize = " ".join([txt for txt in clean_txt])
+            else:
+                text_to_summarize = clean_txt
             # extractive summarizer
 
             with st.spinner(
