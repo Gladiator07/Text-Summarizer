@@ -45,7 +45,7 @@ if __name__ == "__main__":
         text, clean_txt = fetch_article_text(url=inp_text)
     elif uploaded_file:
         clean_txt = read_text_from_file(uploaded_file)
-        clean_txt = clean_text(inp_text)
+        clean_txt = clean_text(clean_txt)
     else:
         clean_txt = clean_text(inp_text)
 
