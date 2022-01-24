@@ -1,5 +1,5 @@
 ---
-title: Text Summarizer Dev
+title: Text Summarizer
 emoji: 🌍
 colorFrom: blue
 colorTo: yellow
