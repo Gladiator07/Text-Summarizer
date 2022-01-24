@@ -17,6 +17,11 @@ if __name__ == "__main__":
     # Main Application
     # ---------------------------------
     st.title("Text Summarizer 📝")
+
+    st.markdown("Creator: [Atharva Ingle](https://github.com/Gladiator07)")
+    st.markdown(
+        "Source code: [GitHub Repository](https://github.com/Gladiator07/Text-Summarizer)"
+    )
     summarize_type = st.sidebar.selectbox(
         "Summarization type", options=["Extractive", "Abstractive"]
     )
