@@ -36,7 +36,7 @@ if __name__ == "__main__":
         unsafe_allow_html=True,
     )
     uploaded_file = st.file_uploader(
-        "Upload a .txt, .pdf, .word file for summarization"
+        "Upload a .txt, .pdf, .docx file for summarization"
     )
 
     is_url = validators.url(inp_text)
