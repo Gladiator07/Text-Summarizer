@@ -1,5 +1,9 @@
 import re
 import requests
+import docx2txt
+from io import StringIO
+from PyPDF2 import PdfFileReader
+
 from bs4 import BeautifulSoup
 from nltk.tokenize import sent_tokenize
 
@@ -98,10 +102,36 @@ def preprocess_text_for_abstractive_summarization(tokenizer, text):
     return chunks
 
 
+def read_pdf(file):
+    pdfReader = PdfFileReader(file)
+    count = pdfReader.numPages
+    all_page_text = ""
+    for i in range(count):
+        page = pdfReader.getPage(i)
+        all_page_text += page.extractText()
+
+    return all_page_text
+
+
 def read_text_from_file(file):
 
-    # txt_file = open(file, "r")
-    file_text = file.read()
-    # txt_file.close()
+    # read text file
+    if file.type == "text/plain":
+        # To convert to a string based IO:
+        stringio = StringIO(file.getvalue().decode("utf-8"))
 
-    return file_text
+        # To read file as string:
+        file_content = stringio.read()
+
+    # read pdf file
+    elif file.type == "application/pdf":
+        file_content = read_pdf(file)
+
+    # read docx file
+    elif (
+        file.type
+        == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ):
+        file_content = docx2txt(file)
+
+    return file_content
