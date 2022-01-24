@@ -108,9 +108,6 @@ if __name__ == "__main__":
                         tokenizer=abs_tokenizer, text=clean_txt
                     )
 
-                print(text_to_summarize)
-                print(type(text_to_summarize))
-                print(len(text_to_summarize))
                 tmp_sum = abs_summarizer(
                     text_to_summarize,
                     max_length=abs_max_length,
