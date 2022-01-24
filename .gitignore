@@ -142,3 +142,4 @@ Docs/
 .DS_Store
 .vscode/
 test.ipynb
+test.py
