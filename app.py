@@ -31,8 +31,16 @@ if __name__ == "__main__":
     # ---------------------------
 
     inp_text = st.text_input("Enter text or a url here")
+    col1, col2, col3 = st.beta_columns([1, 6, 1])
 
-    st.subheader("----- OR -----")
+    with col1:
+        st.write("")
+
+    with col2:
+        st.subheader("----- OR -----")
+
+    with col3:
+        st.write("")
     uploaded_file = st.file_uploader(
         "Upload a .txt, .pdf, .word file for summarization"
     )
@@ -43,6 +51,7 @@ if __name__ == "__main__":
         text, clean_txt = fetch_article_text(url=inp_text)
     elif uploaded_file:
         clean_txt = read_text_from_file(uploaded_file)
+        clean_txt = clean_text(inp_text)
     else:
         clean_txt = clean_text(inp_text)
 
