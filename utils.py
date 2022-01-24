@@ -132,6 +132,6 @@ def read_text_from_file(file):
         file.type
         == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ):
-        file_content = docx2txt(file)
+        file_content = docx2txt.process(file)
 
     return file_content
