@@ -31,14 +31,14 @@ if __name__ == "__main__":
     )
     st.markdown(
         """- Raw text in text box 
-    - URL of article/news to be summarized 
-    - .txt, .pdf, .docx file formats"""
+- URL of article/news to be summarized 
+- .txt, .pdf, .docx file formats"""
     )
     st.markdown(
         """This app supports two type of summarization:
 
-    1. **Extractive Summarization**: The extractive approach involves picking up the most important phrases and lines from the documents. It then combines all the important lines to create the summary. So, in this case, every line and word of the summary actually belongs to the original document which is summarized.
-    2. **Abstractive Summarization**: The abstractive approach involves rephrasing the complete document while capturing the complete meaning of the document. This type of summarization provides more human-like summary"""
+1. **Extractive Summarization**: The extractive approach involves picking up the most important phrases and lines from the documents. It then combines all the important lines to create the summary. So, in this case, every line and word of the summary actually belongs to the original document which is summarized.
+2. **Abstractive Summarization**: The abstractive approach involves rephrasing the complete document while capturing the complete meaning of the document. This type of summarization provides more human-like summary"""
     )
     st.markdown("---")
     # ---------------------------
