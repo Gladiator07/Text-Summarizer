@@ -19,8 +19,7 @@ if __name__ == "__main__":
     st.header("Testing file uploads")
 
     uploaded_file = st.file_uploader("Upload a file here")
-
-    st.write(uploaded_file.type)
-    docx_text = docx2txt.process(uploaded_file)
-
-    st.write(docx_text)
+    st.markdown(
+        "<h3 style='text-align: center; color: red;'>OR</h3>",
+        unsafe_allow_html=True,
+    )

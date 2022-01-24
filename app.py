@@ -31,16 +31,10 @@ if __name__ == "__main__":
     # ---------------------------
 
     inp_text = st.text_input("Enter text or a url here")
-    col1, col2, col3 = st.beta_columns([1, 6, 1])
-
-    with col1:
-        st.write("")
-
-    with col2:
-        st.subheader("----- OR -----")
-
-    with col3:
-        st.write("")
+    st.markdown(
+        "<h3 style='text-align: center; color: red;'>OR</h3>",
+        unsafe_allow_html=True,
+    )
     uploaded_file = st.file_uploader(
         "Upload a .txt, .pdf, .word file for summarization"
     )
