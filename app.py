@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     inp_text = st.text_input("Enter text or a url here")
     st.markdown(
-        "<h3 style='text-align: center; color: red;'>OR</h3>",
+        "<h3 style='text-align: center; color: green;'>OR</h3>",
         unsafe_allow_html=True,
     )
     uploaded_file = st.file_uploader(
