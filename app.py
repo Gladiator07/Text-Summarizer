@@ -22,6 +22,7 @@ if __name__ == "__main__":
     st.markdown(
         "Source code: [GitHub Repository](https://github.com/Gladiator07/Text-Summarizer)"
     )
+    st.markdown("---")
     summarize_type = st.sidebar.selectbox(
         "Summarization type", options=["Extractive", "Abstractive"]
     )
