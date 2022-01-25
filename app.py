@@ -47,7 +47,7 @@ if __name__ == "__main__":
     abs_tokenizer_name = "facebook/bart-large-cnn"
     abs_model_name = "facebook/bart-large-cnn"
     abs_tokenizer = AutoTokenizer.from_pretrained(abs_tokenizer_name)
-    abs_max_length = 80
+    abs_max_length = 90
     abs_min_length = 30
     # ---------------------------
 
