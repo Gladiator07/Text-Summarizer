@@ -91,7 +91,7 @@ if __name__ == "__main__":
                 text="Creating extractive summary. This might take a few seconds ..."
             ):
                 ext_model = Summarizer()
-                summarized_text = ext_model(text_to_summarize, num_sentences=6)
+                summarized_text = ext_model(text_to_summarize, num_sentences=5)
 
         elif summarize_type == "Abstractive":
             with st.spinner(
