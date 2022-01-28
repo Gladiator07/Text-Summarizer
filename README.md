@@ -10,3 +10,5 @@ pinned: false
 
 # Text Summarizer
 Text summarizer using Transformers
+
+### This app is deployed on HuggingFace 🤗 Spaces [here](https://huggingface.co/spaces/Gladiator/Text-Summarizer)
