@@ -12,7 +12,7 @@ from utils import (
     read_text_from_file,
 )
 
-from rouge import rouge
+from rouge import Rouge
 
 if __name__ == "__main__":
     # ---------------------------------
@@ -124,5 +124,6 @@ if __name__ == "__main__":
         st.info(summarized_text)
 
         st.subheader("Rogue Scores")
-        score = rouge.get_scores(summarized_text, cleaned_txt, avg=True)
-        st.write(score)
+        rouge_sc = Rouge()
+        score = rouge_sc.get_scores(summarized_text, cleaned_txt, avg=True)
+        st.code(score)
