@@ -125,5 +125,5 @@ if __name__ == "__main__":
 
         st.subheader("Rogue Scores")
         rouge_sc = Rouge()
-        score = rouge_sc.get_scores(summarized_text, cleaned_txt, avg=True)
+        score = rouge_sc.get_scores(summarized_text, text_to_summarize, avg=True)
         st.code(score)
