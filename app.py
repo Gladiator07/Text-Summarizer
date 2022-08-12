@@ -125,5 +125,6 @@ if __name__ == "__main__":
 
         st.subheader("Rogue Scores")
         rouge_sc = Rouge()
-        score = rouge_sc.get_scores(summarized_text, text_to_summarize, avg=True)
+        ground_truth = cleaned_txt[0] if is_url else cleaned_txt
+        score = rouge_sc.get_scores(summarized_text, ground_truth, avg=True)
         st.code(score)
