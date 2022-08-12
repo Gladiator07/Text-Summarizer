@@ -12,6 +12,8 @@ from utils import (
     read_text_from_file,
 )
 
+from rouge import rouge
+
 if __name__ == "__main__":
     # ---------------------------------
     # Main Application
@@ -63,28 +65,28 @@ if __name__ == "__main__":
     is_url = validators.url(inp_text)
     if is_url:
         # complete text, chunks to summarize (list of sentences for long docs)
-        text, clean_txt = fetch_article_text(url=inp_text)
+        text, cleaned_txt = fetch_article_text(url=inp_text)
     elif uploaded_file:
-        clean_txt = read_text_from_file(uploaded_file)
-        clean_txt = clean_text(clean_txt)
+        cleaned_txt = read_text_from_file(uploaded_file)
+        cleaned_txt = clean_text(cleaned_txt)
     else:
-        clean_txt = clean_text(inp_text)
+        cleaned_txt = clean_text(inp_text)
 
     # view summarized text (expander)
     with st.expander("View input text"):
         if is_url:
-            st.write(clean_txt[0])
+            st.write(cleaned_txt[0])
         else:
-            st.write(clean_txt)
+            st.write(cleaned_txt)
     summarize = st.button("Summarize")
 
     # called on toggle button [summarize]
     if summarize:
         if summarize_type == "Extractive":
             if is_url:
-                text_to_summarize = " ".join([txt for txt in clean_txt])
+                text_to_summarize = " ".join([txt for txt in cleaned_txt])
             else:
-                text_to_summarize = clean_txt
+                text_to_summarize = cleaned_txt
             # extractive summarizer
 
             with st.spinner(
@@ -97,7 +99,7 @@ if __name__ == "__main__":
             with st.spinner(
                 text="Creating abstractive summary. This might take a few seconds ..."
             ):
-                text_to_summarize = clean_txt
+                text_to_summarize = cleaned_txt
                 abs_summarizer = pipeline(
                     "summarization", model=abs_model_name, tokenizer=abs_tokenizer_name
                 )
@@ -105,7 +107,7 @@ if __name__ == "__main__":
                 if is_url is False:
                     # list of chunks
                     text_to_summarize = preprocess_text_for_abstractive_summarization(
-                        tokenizer=abs_tokenizer, text=clean_txt
+                        tokenizer=abs_tokenizer, text=cleaned_txt
                     )
 
                 tmp_sum = abs_summarizer(
@@ -120,3 +122,7 @@ if __name__ == "__main__":
         # final summarized output
         st.subheader("Summarized text")
         st.info(summarized_text)
+
+        st.subheader("Rogue Scores")
+        score = rouge.get_scores(summarized_text, cleaned_txt, avg=True)
+        st.write(score)
