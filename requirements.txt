@@ -9,3 +9,4 @@ beautifulsoup4
 nltk
 PyPDF2
 docx2txt
+rogue
