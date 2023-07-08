@@ -10,3 +10,4 @@ nltk
 PyPDF2
 docx2txt
 rouge
+altair==4.0
